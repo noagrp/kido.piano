@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kido Fun Guitar</title>
+    <title>Kido Fun Guitar🎸</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <h1>Kido Fun Guitar</h1>
-        <p>Tap the strings</p>
+        <p>Chord buttons • Stringless guitar</p>
     </header>
 
-    <!-- BIG GUITAR -->
+    <!-- BIG STRINGLESS GUITAR -->
     <section id="guitar-section">
         <div class="guitar-container">
             <div id="guitar" class="guitar">
                 <div class="neck" id="neck">
                     <div class="frets" id="frets"></div>
-                    <div class="strings" id="strings"></div>
+                    <!-- No strings layer -->
                 </div>
             </div>
         </div>
@@ -30,13 +30,14 @@
         </div>
 
         <div class="quick-controls">
-            <button id="strum-btn">Strum All</button>
+            <button id="strum-btn">Strum All (Open)</button>
         </div>
     </section>
 
     <button id="controls-toggle">Show Controls +</button>
 
     <div class="features-container" id="features-container">
+        <!-- Chord Buttons (now primary) -->
         <div class="collapsible">
             <div class="toggle-header" data-target="chords-panel">
                 <span>⚡ Chords</span><span class="plus">+</span>
@@ -46,6 +47,7 @@
             </div>
         </div>
 
+        <!-- Lessons & Songs remain -->
         <div class="collapsible">
             <div class="toggle-header" data-target="lessons-panel">
                 <span>📚 Beginner Lessons</span><span class="plus">+</span>
@@ -66,7 +68,7 @@
     </div>
 
     <footer>
-        <p>Made for practice • Progress saved locally</p>
+        <p>Big stringless guitar • Chord focused • Practice daily</p>
     </footer>
 
     <script src="script.js"></script>
