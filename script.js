@@ -84,9 +84,98 @@ function createChordButtons() {
     });
 }
 
-// Lessons & Songs (same as before)
-const lessons = [ /* ... copy from previous full version if needed ... */ ];
-// (For brevity I'm keeping it short - you can use the lessons from earlier messages)
+// Lessons
+const lessons = [
+    { id: 1, title: "1. Holding & Tuning", content: "Sit comfortably. Use a tuner app. Memorize open strings E A D G B E." },
+    { id: 2, title: "2. First Chord - Em", content: "Press 2nd fret on 5th and 4th strings." },
+    { id: 3, title: "3. C Major", content: "3rd fret 5th, 2nd fret 4th, 1st fret 2nd string." },
+    { id: 4, title: "4. G Major", content: "3rd fret 6th & 1st, 2nd fret 5th string." },
+    { id: 5, title: "5. A minor (Am)", content: "2nd fret on strings 4, 3 and 2." },
+    { id: 6, title: "6. D Major", content: "2nd fret on 3rd & 1st, 3rd fret on 2nd string." },
+    { id: 7, title: "7. Basic Strumming", content: "Down-up strumming pattern with Em and G." },
+    { id: 8, title: "8. Horse with No Name", content: "Em - D - Em - D (repeat)" }
+];
+
+function createLessons() {
+    const container = document.getElementById('lessons-list');
+    lessons.forEach(lesson => {
+        const div = document.createElement('div');
+        div.className = 'lesson';
+        div.innerHTML = `
+            <h3>${lesson.title}</h3>
+            <p>${lesson.content}</p>
+            <button onclick="playLessonExample(${lesson.id})">Play Example</button>
+        `;
+        container.appendChild(div);
+    });
+}
+
+window.playLessonExample = function(id) {
+    if (id === 2) playChord('Em');
+    else if (id === 3) playChord('C');
+    else if (id === 4) playChord('G');
+    else if (id === 5) playChord('Am');
+    else if (id === 6) playChord('D');
+    else strumAll();
+};
+
+// Songs
+const songs = [
+    { title: "Twinkle Twinkle", chords: "C C G G A A G" },
+    { title: "Happy Birthday", chords: "C C D C F E" },
+    { title: "Amazing Grace", chords: "G G C G" }
+];
+
+function createSongs() {
+    const container = document.getElementById('songs-list');
+    songs.forEach(song => {
+        const div = document.createElement('div');
+        div.className = 'song-item';
+        div.innerHTML = `
+            <strong>${song.title}</strong>
+            <p>${song.chords}</p>
+            <button onclick="playSong('${song.chords}')">Play</button>
+        `;
+        container.appendChild(div);
+    });
+}
+
+window.playSong = function(chordStr) {
+    const chordList = chordStr.split(' ');
+    let delay = 0;
+    chordList.forEach(ch => {
+        if (chords[ch]) {
+            setTimeout(() => playChord(ch), delay);
+            delay += 900;
+        }
+    });
+};
+
+function setupToggles() {
+    const toggleBtn = document.getElementById('controls-toggle');
+    const features = document.getElementById('features-container');
+
+    toggleBtn.addEventListener('click', () => {
+        if (features.style.display === 'block') {
+            features.style.display = 'none';
+            toggleBtn.textContent = 'Show Controls +';
+        } else {
+            features.style.display = 'block';
+            toggleBtn.textContent = 'Hide Controls –';
+        }
+    });
+
+    document.querySelectorAll('.toggle-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const targetId = header.dataset.target;
+            const panel = document.getElementById(targetId);
+            const plus = header.querySelector('.plus');
+            const isHidden = panel.style.display !== 'block';
+            panel.style.display = isHidden ? 'block' : 'none';
+            plus.textContent = isHidden ? '–' : '+';
+        });
+    });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     createGuitar();
