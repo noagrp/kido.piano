@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kido Fun Guitar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Kido Fun Guitar</h1>
+        <p>Tap the strings</p>
+    </header>
+
+    <!-- BIG GUITAR -->
+    <section id="guitar-section">
+        <div class="guitar-container">
+            <div id="guitar" class="guitar">
+                <div class="neck" id="neck">
+                    <div class="frets" id="frets"></div>
+                    <div class="strings" id="strings"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="fret-markers">
+            <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+            <span>11</span><span>12</span>
+        </div>
+
+        <div class="quick-controls">
+            <button id="strum-btn">Strum All</button>
+        </div>
+    </section>
+
+    <button id="controls-toggle">Show Controls +</button>
+
+    <div class="features-container" id="features-container">
+        <div class="collapsible">
+            <div class="toggle-header" data-target="chords-panel">
+                <span>⚡ Chords</span><span class="plus">+</span>
+            </div>
+            <div id="chords-panel" class="panel">
+                <div class="chord-buttons" id="chord-buttons"></div>
+            </div>
+        </div>
+
+        <div class="collapsible">
+            <div class="toggle-header" data-target="lessons-panel">
+                <span>📚 Beginner Lessons</span><span class="plus">+</span>
+            </div>
+            <div id="lessons-panel" class="panel">
+                <div id="lessons-list"></div>
+            </div>
+        </div>
+
+        <div class="collapsible">
+            <div class="toggle-header" data-target="songs-panel">
+                <span>🎵 Public Domain Songs</span><span class="plus">+</span>
+            </div>
+            <div id="songs-panel" class="panel">
+                <div id="songs-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Made for practice • Progress saved locally</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
