@@ -2,54 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kido Fun Guitar</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KidoPiano</title>
+    <style>
+        body { 
+            background: #111; color: #fff; margin: 0; padding: 0;
+            display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; height: 100vh; overflow: hidden;
+        }
+        #container { margin-top: 50px; width: 95vw; height: 60vh; }
+        #piano-scroll { 
+            display: flex; overflow-x: scroll; height: 100%;
+            border: 4px solid #444; border-radius: 10px; background: #000;
+        }
+        button { 
+            flex-shrink: 0; border: 1px solid #000; cursor: pointer; 
+            display: flex; align-items: flex-end; justify-content: center;
+            padding-bottom: 10px; font-weight: bold; font-size: 12px;
+        }
+        .white { background: #fff; color: #000; width: 80px; height: 100%; }
+        .black { background: #000; color: #fff; width: 50px; height: 70%; margin-left: -25px; margin-right: -25px; z-index: 2; }
+        button:active { background: #ffcc00; }
+        #landscape-msg { display: none; color: yellow; margin-top: 10px; }
+        @media screen and (orientation:portrait) { #landscape-msg { display: block; } }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Kido Fun Guitar</h1>
-        <p>Button Guitar • Learn by playing</p>
-    </header>
 
-    <!-- Button Guitar -->
-    <section id="guitar-section">
-        <div class="guitar-container">
-            <div id="guitar" class="guitar">
-                <div class="neck" id="neck">
-                    <div class="frets" id="frets"></div>
-                    <div class="chord-overlay" id="chord-overlay"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <button id="controls-toggle">Show Lessons & Songs +</button>
-
-    <div class="features-container" id="features-container">
-        <div class="collapsible">
-            <div class="toggle-header" data-target="lessons-panel">
-                <span>📚 Beginner Lessons</span><span class="plus">+</span>
-            </div>
-            <div id="lessons-panel" class="panel">
-                <div id="lessons-list"></div>
-            </div>
-        </div>
-
-        <div class="collapsible">
-            <div class="toggle-header" data-target="songs-panel">
-                <span>🎵 Public Domain Songs</span><span class="plus">+</span>
-            </div>
-            <div id="songs-panel" class="panel">
-                <div id="songs-list"></div>
-            </div>
-        </div>
+    <div id="container">
+        <div id="piano-scroll"></div>
     </div>
+    <div id="landscape-msg">Please rotate your phone to landscape mode!</div>
 
-    <footer>
-        <p>Button Guitar • Tap chords on the body</p>
-    </footer>
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const container = document.getElementById('piano-scroll');
+        const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-    <script src="script.js"></script>
+        function playTone(freq) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
+            osc.connect(gain).connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 1);
+        }
+
+        for (let i = 0; i < 88; i++) {
+            const freq = 440 * Math.pow(2, (i - 49) / 12);
+            const btn = document.createElement('button');
+            const noteIndex = i % 12;
+            const isBlack = [1, 3, 6, 8, 10].includes(noteIndex);
+            
+            btn.className = isBlack ? 'black' : 'white';
+            // Add label for white keys, or all if you prefer
+            if (!isBlack) {
+                btn.innerText = noteNames[noteIndex];
+            }
+            
+            btn.onclick = () => { audioCtx.resume(); playTone(freq); };
+            container.appendChild(btn);
+        }
+    </script>
 </body>
 </html>
